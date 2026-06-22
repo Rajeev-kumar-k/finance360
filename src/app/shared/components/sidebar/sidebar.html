@@ -1,0 +1,43 @@
+<div class="sidebar">
+
+  <div class="logo">
+    <span class="material-icons">account_balance</span>
+    <span class="menu-text">Finance360</span>
+  </div>
+
+  <nav class="menu">
+
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active-menu"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="menu-item">
+
+      <span class="material-icons">
+        dashboard
+      </span>
+
+      <span class="menu-text">
+        Dashboard
+      </span>
+
+    </a>
+
+    <a
+      routerLink="/claims/new"
+      routerLinkActive="active-menu"
+      class="menu-item">
+
+      <span class="material-icons">
+        receipt_long
+      </span>
+
+      <span class="menu-text">
+        Create Claim
+      </span>
+
+    </a>
+
+  </nav>
+
+</div>

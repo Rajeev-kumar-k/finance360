@@ -1,0 +1,114 @@
+<div class="dashboard-container">
+
+  <div class="dashboard-header">
+
+    <div>
+      <h1>Dashboard</h1>
+      <p class="subtitle">Expense Claims Overview</p>
+    </div>
+
+  </div>
+
+  <div class="top-section">
+
+    <div class="filters">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Year</mat-label>
+        <mat-select [(value)]="selectedYear">
+          @for(year of years; track year){
+            <mat-option [value]="year">{{year}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Month</mat-label>
+        <mat-select [(value)]="selectedMonth">
+          @for(month of months; track month){
+            <mat-option [value]="month">{{month}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+    <div class="summary-cards">
+
+      <mat-card class="summary-card raised">
+        <div class="card-title">Raised</div>
+        <div class="card-value">₹25,000</div>
+      </mat-card>
+
+      <mat-card class="summary-card pending">
+        <div class="card-title">Pending</div>
+        <div class="card-value">₹7,000</div>
+      </mat-card>
+
+      <mat-card class="summary-card approved">
+        <div class="card-title">Approved</div>
+        <div class="card-value">₹18,000</div>
+      </mat-card>
+
+    </div>
+
+  </div>
+
+  <div class="table-header">
+
+    <div></div>
+
+    <mat-form-field appearance="outline" class="search-box">
+      <mat-label>Search Claims</mat-label>
+      <input matInput placeholder="Report ID / Status / Date">
+    </mat-form-field>
+
+  </div>
+
+  <mat-card class="table-card">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Report ID</th>
+          <th>Submission Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>#12345</td>
+          <td>10 Jan 2026</td>
+          <td>₹2,500</td>
+          <td>
+            <span class="status pending-chip">
+              Pending
+            </span>
+          </td>
+          <td>View</td>
+        </tr>
+
+        <tr>
+          <td>#12346</td>
+          <td>11 Jan 2026</td>
+          <td>₹1,800</td>
+          <td>
+            <span class="status approved-chip">
+              Approved
+            </span>
+          </td>
+          <td>View</td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </mat-card>
+
+</div>

@@ -1,0 +1,325 @@
+.claim-container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.page-header p {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.claim-card {
+  background: #2e3142 !important;
+
+  border-radius: 18px !important;
+
+  padding: 28px;
+
+  border: none;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   STEP 1 FORM
+========================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 16px 24px;
+}
+
+.actions {
+  margin-top: 30px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.right-actions {
+  display: flex;
+}
+
+.action-btn {
+  min-width: 140px;
+  height: 46px;
+
+  border-radius: 10px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.save-btn,
+.next-btn,
+.add-btn {
+  background: #ffe600 !important;
+  color: #000 !important;
+  font-weight: 600;
+}
+
+.discard-btn {
+  background: #4b4f63 !important;
+  color: white !important;
+}
+
+.load-btn {
+  background: #1976d2 !important;
+  color: white !important;
+}
+
+/* =========================
+   MATERIAL OVERRIDES
+========================= */
+
+:host ::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+:host ::ng-deep .mat-mdc-text-field-wrapper {
+  background: #5b5f72 !important;
+  border-radius: 8px !important;
+}
+
+:host ::ng-deep .mdc-text-field--outlined {
+  background: #5b5f72 !important;
+  border-radius: 8px !important;
+}
+
+:host ::ng-deep .mdc-floating-label {
+  color: #ffe600 !important;
+}
+
+:host ::ng-deep .mat-mdc-input-element {
+  color: white !important;
+}
+
+:host ::ng-deep .mat-mdc-select-value {
+  color: white !important;
+}
+
+:host ::ng-deep .mat-mdc-select-arrow {
+  color: #ffe600 !important;
+}
+
+:host ::ng-deep .mdc-notched-outline__leading,
+:host ::ng-deep .mdc-notched-outline__notch,
+:host ::ng-deep .mdc-notched-outline__trailing {
+  border-color: transparent !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field-focus-overlay {
+  background: transparent !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+/* =========================
+   STEP 2 LAYOUT
+========================= */
+
+.expense-layout {
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+  gap: 24px;
+
+  align-items: start;
+}
+
+/* =========================
+   LEFT SIDE
+========================= */
+
+.expense-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.upload-box {
+  border: 2px dashed #ffe600;
+
+  border-radius: 16px;
+
+  min-height: 180px;
+
+  padding: 24px;
+
+  margin-bottom: 16px;
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  color: white;
+}
+
+.upload-icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.upload-box h3 {
+  margin: 8px 0;
+}
+
+.upload-box p {
+  color: #d1d5db;
+  margin-bottom: 16px;
+}
+
+.expense-actions {
+  margin-top: 20px;
+
+  display: flex;
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+
+.expense-table {
+  color: white;
+
+  min-width: 0;
+
+  width: 100%;
+}
+.expense-table table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 18px;
+}
+
+.table-header h3 {
+  margin: 0;
+}
+
+.total {
+  color: #ffe600;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.expense-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.expense-table th {
+  text-align: left;
+
+  color: white;
+
+  padding: 14px 10px;
+
+  border-bottom: 1px solid #4a4f65;
+
+  font-weight: 600;
+}
+
+.expense-table td {
+  padding: 12px 8px;
+
+  border-bottom: 1px solid #4a4f65;
+
+  font-size: 14px;
+}
+
+.footer-buttons {
+  margin-top: 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-buttons button {
+  min-width: 140px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+  .expense-layout {
+  display: grid;
+
+  grid-template-columns: 55% 45%;
+
+  gap: 20px;
+
+  align-items: start;
+}
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .left-actions,
+  .right-actions {
+    width: 100%;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+
+  .footer-buttons {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

@@ -1,0 +1,40 @@
+.success-container {
+  padding: 24px;
+
+  text-align: center;
+
+  min-width: 400px;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+
+  margin: auto;
+
+  border-radius: 50%;
+
+  background: #4caf50;
+
+  color: white;
+
+  font-size: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+.reference {
+  margin-top: 20px;
+
+  padding: 12px;
+
+  background: #f5f5f5;
+
+  border-radius: 8px;
+}

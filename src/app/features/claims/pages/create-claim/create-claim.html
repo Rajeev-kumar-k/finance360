@@ -1,0 +1,335 @@
+@if(currentStep === 1){
+
+<div class="claim-container">
+
+  <div class="page-header">
+
+
+<h1>Create Expense Claim</h1>
+
+<p>
+  Submit and manage employee expense claims
+</p>
+
+
+  </div>
+
+  <mat-card class="claim-card">
+
+
+<div class="form-grid">
+
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Employee</mat-label>
+    <input
+      matInput
+      [value]="employee"
+      readonly>
+  </mat-form-field>
+
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Department</mat-label>
+    <input
+      matInput
+      [value]="department"
+      readonly>
+  </mat-form-field>
+
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Cost Center</mat-label>
+
+    <mat-select [(value)]="selectedCostCenter">
+
+      @for(center of costCenters; track center){
+
+        <mat-option [value]="center">
+          {{center}}
+        </mat-option>
+
+      }
+
+    </mat-select>
+
+  </mat-form-field>
+
+ 
+  <mat-form-field appearance="outline">
+    <mat-label>Manager</mat-label>
+    <input
+      matInput
+      [value]="manager"
+      readonly>
+  </mat-form-field>
+
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <input
+      matInput
+      [value]="status"
+      readonly>
+  </mat-form-field>
+
+  
+  <mat-form-field appearance="outline">
+    <mat-label>Submission Date</mat-label>
+    <input
+      matInput
+      [value]="submissionDate | date:'dd MMM yyyy'">
+  </mat-form-field>
+
+ 
+  <mat-form-field appearance="outline">
+    <mat-label>Purpose of Visit / Expense</mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="businessPurpose">
+  </mat-form-field>
+
+ 
+  <mat-form-field appearance="outline">
+    <mat-label>Total Amount</mat-label>
+
+    <input
+      matInput
+      [(ngModel)]="totalAmount">
+  </mat-form-field>
+
+</div>
+
+<div class="actions">
+
+  <div class="left-actions">
+
+    <button
+      mat-flat-button
+      class="action-btn save-btn">
+      Save Draft
+    </button>
+
+    <button
+      mat-flat-button
+      class="action-btn discard-btn">
+      Discard
+    </button>
+
+  </div>
+
+  <div class="right-actions">
+
+    <button
+      mat-flat-button
+      class="action-btn next-btn"
+      (click)="nextStep()">
+      Next
+    </button>
+
+  </div>
+
+</div>
+
+
+  </mat-card>
+
+</div>
+
+}
+
+@if(currentStep === 2){
+
+ 
+
+
+<mat-card class="claim-card">
+
+  <div class="expense-layout">
+
+    <div class="expense-form">
+
+      <div class="upload-box">
+
+        <span class="upload-icon">
+          📁
+        </span>
+
+        <h3>Upload Receipts</h3>
+
+        <p>
+          Drag & Drop or Click to Upload
+        </p>
+
+        <input type="file">
+
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Report ID</mat-label>
+        <input matInput [(ngModel)]="expense.reportId">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <input matInput [(ngModel)]="expense.date">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+
+        <mat-select [(value)]="expense.category">
+
+          @for(category of categories; track category){
+
+            <mat-option [value]="category">
+              {{category}}
+            </mat-option>
+
+          }
+
+        </mat-select>
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Merchant</mat-label>
+        <input matInput [(ngModel)]="expense.merchant">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput [(ngModel)]="expense.amount">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+
+        <textarea
+          rows="4"
+          matInput
+          [(ngModel)]="expense.description">
+        </textarea>
+
+      </mat-form-field>
+
+      <div class="expense-actions">
+
+  <button
+    mat-flat-button
+    class="add-btn"
+    (click)="addItem()">
+    Add Item
+  </button>
+
+  <button
+    mat-flat-button
+    class="draft-btn">
+    Save Draft
+  </button>
+
+  <button
+    mat-flat-button
+    class="load-btn">
+    Load Draft
+  </button>
+
+</div>
+
+    </div>
+
+    <div class="expense-table">
+
+      <div class="table-header">
+
+        <h3>
+          Expense Items
+        </h3>
+
+        <div class="total">
+          Total : ₹{{totalExpense}}
+        </div>
+
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Merchant</th>
+            <th>Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          @for(item of expenseItems; track item.id){
+
+            <tr>
+
+              <td>{{item.id}}</td>
+
+              <td>{{item.category}}</td>
+
+              <td>{{item.merchant}}</td>
+
+              <td>₹{{item.amount}}</td>
+
+              <td>
+
+                <button
+                  mat-button
+                  color="warn"
+                  (click)="removeItem($index)">
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+          @if(expenseItems.length === 0){
+
+<tr>
+  <td colspan="5" style="text-align:center;padding:30px;color:#9ca3af;">
+    No expense items added yet
+  </td>
+</tr>
+
+}
+
+        </tbody>
+
+      </table>
+
+      <div class="footer-buttons">
+
+        <button
+          mat-flat-button
+          class="discard-btn"
+          (click)="backStep()">
+          Back
+        </button>
+
+        <button
+  mat-flat-button
+  class="next-btn"
+  (click)="submitClaim()">
+  Submit Claim
+</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</mat-card>
+
+}
