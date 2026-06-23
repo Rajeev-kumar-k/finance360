@@ -162,7 +162,9 @@
           Drag & Drop or Click to Upload
         </p>
 
-        <input type="file">
+       <input
+  type="file"
+  (change)="onFileSelected($event)">
 
       </div>
 
@@ -223,17 +225,23 @@
     Add Item
   </button>
 
-  <button
-    mat-flat-button
-    class="draft-btn">
-    Save Draft
-  </button>
+ <button
+  mat-flat-button
+  class="draft-btn"
+  (click)="saveDraft()">
 
-  <button
-    mat-flat-button
-    class="load-btn">
-    Load Draft
-  </button>
+  Save Draft
+
+</button>
+
+<button
+  mat-flat-button
+  class="load-btn"
+  (click)="loadDraft()">
+
+  Load Draft
+
+</button>
 
 </div>
 
