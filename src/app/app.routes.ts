@@ -4,6 +4,7 @@ import { MainLayout } from './shared/layouts/main-layout/main-layout';
 import { Dashboard } from './features/dashboard/pages/dashboard/dashboard';
 import { CreateClaim } from './features/claims/pages/create-claim/create-claim';
 import { HelpCenter } from './features/help/pages/help-center/help-center';
+//import { TravelRequest } from './features/travel/pages/travel-request/travel-request';
 
 export const routes: Routes = [
   {
@@ -26,7 +27,16 @@ export const routes: Routes = [
       {
       path: 'help',
       component: HelpCenter
-      }
+      },
+     {
+  path: 'travel-request',
+  loadComponent: () =>
+    import(
+      './features/travel/pages/travel-request/travel-request'
+    ).then(
+      m => m.TravelRequest
+    )
+}
     ]
   }
 ];

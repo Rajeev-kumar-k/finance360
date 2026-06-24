@@ -1,0 +1,191 @@
+<div class="travel-container">
+
+  <div class="page-header">
+
+    <h1>
+      ✈ Travel Request
+    </h1>
+
+    <p>
+      Submit travel approval requests before raising expenses.
+    </p>
+
+  </div>
+
+  <div class="form-card">
+
+    <div class="section-title">
+      Request Information
+    </div>
+
+    <div class="grid">
+
+      <div>
+        <label>Request ID</label>
+        <input
+          [value]="requestId"
+          readonly>
+      </div>
+
+      <div>
+        <label>Employee Name</label>
+        <input
+          [value]="employeeName"
+          readonly>
+      </div>
+
+      
+
+      <div>
+  <label>Employee Email</label>
+  <input
+    [value]="employeeEmail"
+    readonly>
+</div>
+
+    <div>
+    <label>GPN</label>
+    <input
+        [value]="gpn"
+        readonly>
+    </div>
+
+      <div>
+        <label>Department</label>
+        <input
+          [value]="department"
+          readonly>
+      </div>
+
+      <div>
+        <label>Manager</label>
+        <input
+          [value]="manager"
+          readonly>
+      </div>
+
+    </div>
+
+    <div class="section-title">
+      Travel Details
+    </div>
+
+    <div class="grid">
+
+      <div>
+        <label>Destination City *</label>
+        <input
+          [(ngModel)]="destinationCity">
+      </div>
+
+      <div>
+        <label>Destination Country *</label>
+        <input
+          [(ngModel)]="destinationCountry">
+      </div>
+
+      <div class="full-width">
+        <label>Purpose of Travel *</label>
+        <textarea
+          rows="3"
+          [(ngModel)]="purpose">
+        </textarea>
+      </div>
+
+      <div>
+        <label>Travel Start Date *</label>
+        <input
+          type="date"
+          [(ngModel)]="startDate">
+      </div>
+
+      <div>
+        <label>Travel End Date *</label>
+        <input
+          type="date"
+          [(ngModel)]="endDate">
+      </div>
+
+    </div>
+
+    <div class="section-title">
+      Estimated Budget
+    </div>
+
+    <div class="grid">
+
+      <div>
+        <label>Hotel Cost</label>
+        <input
+          type="number"
+          [(ngModel)]="hotelCost">
+      </div>
+
+      <div>
+        <label>Flight Cost</label>
+        <input
+          type="number"
+          [(ngModel)]="flightCost">
+      </div>
+
+      <div>
+        <label>Local Travel Cost</label>
+        <input
+          type="number"
+          [(ngModel)]="localTravelCost">
+      </div>
+
+      <div>
+        <label>Food Cost</label>
+        <input
+          type="number"
+          [(ngModel)]="foodCost">
+      </div>
+
+    </div>
+
+    <div class="section-title">
+      Approval Mail
+    </div>
+
+    <div class="upload-box">
+
+      <input
+        type="file"
+        accept=".pdf,.jpg,.jpeg,.png,.msg,.eml"
+        (change)="onApprovalMailSelected($event)">
+
+      <div
+        *ngIf="approvalMail">
+
+        📎
+        {{ approvalMail.name }}
+
+      </div>
+
+    </div>
+
+    <div class="section-title">
+      Additional Remarks
+    </div>
+
+    <textarea
+      rows="4"
+      [(ngModel)]="remarks">
+    </textarea>
+
+    <div class="actions">
+
+      <button
+        class="submit-btn"
+        (click)="submitRequest()">
+
+        Submit Request
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
