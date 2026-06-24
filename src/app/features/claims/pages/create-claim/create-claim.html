@@ -5,11 +5,12 @@
   <div class="page-header">
 
 
-<h1>Create Expense Claim</h1>
+<h1>Create Expense Reimbursement</h1>
 
 <p>
   Submit and manage employee expense claims
 </p>
+
 
 
   </div>
@@ -146,7 +147,9 @@
 
 <mat-card class="claim-card">
 
+  
   <div class="expense-layout">
+   
 
     <div class="expense-form">
 
@@ -162,8 +165,9 @@
           Drag & Drop or Click to Upload
         </p>
 
-       <input
+      <input
   type="file"
+  multiple
   (change)="onFileSelected($event)">
 
       </div>
@@ -174,9 +178,26 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>Date</mat-label>
-        <input matInput [(ngModel)]="expense.date">
-      </mat-form-field>
+
+  <mat-label>
+    Date
+  </mat-label>
+
+  <input
+    matInput
+    [matDatepicker]="picker"
+    [(ngModel)]="expense.date">
+
+  <mat-datepicker-toggle
+    matSuffix
+    [for]="picker">
+  </mat-datepicker-toggle>
+
+  <mat-datepicker
+    #picker>
+  </mat-datepicker>
+
+</mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Category</mat-label>
@@ -202,7 +223,11 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Amount</mat-label>
-        <input matInput [(ngModel)]="expense.amount">
+       <input
+        matInput
+        type="number"
+        min="0"
+        [(ngModel)]="expense.amount">
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -290,11 +315,14 @@
               <td>
 
                 <button
-                  mat-button
-                  color="warn"
-                  (click)="removeItem($index)">
-                  Delete
-                </button>
+                mat-raised-button
+                color="warn"
+                class="delete-btn"
+                (click)="removeItem($index)">
+
+                🗑️ Delete
+
+              </button>
 
               </td>
 

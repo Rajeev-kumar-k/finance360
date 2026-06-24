@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { MainLayout } from './shared/layouts/main-layout/main-layout';
 import { Dashboard } from './features/dashboard/pages/dashboard/dashboard';
 import { CreateClaim } from './features/claims/pages/create-claim/create-claim';
+import { HelpCenter } from './features/help/pages/help-center/help-center';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,10 @@ export const routes: Routes = [
       {
         path: 'claims/new',
         component: CreateClaim
+      },
+      {
+      path: 'help',
+      component: HelpCenter
       }
     ]
   }

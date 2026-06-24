@@ -72,7 +72,8 @@
 
 .table-header {
   display: flex;
-  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
   margin-bottom: 16px;
 }
 
@@ -80,6 +81,9 @@
   width: 320px;
 }
 
+.status-filter {
+  width: 180px;
+}
 .table-card {
   padding: 20px;
   border-radius: 16px;
@@ -116,4 +120,9 @@ td {
 .approved-chip {
   background: #d4edda;
   color: #155724;
+}
+
+.view-btn {
+  border-radius: 8px;
+  font-weight: 600;
 }

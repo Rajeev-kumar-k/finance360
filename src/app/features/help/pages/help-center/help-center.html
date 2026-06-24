@@ -1,0 +1,54 @@
+<div class="faq-container">
+
+  <h1>
+    Frequently Asked Questions
+  </h1>
+
+  <div class="search-box">
+
+    <input
+      type="text"
+      placeholder="Search topics"
+      [(ngModel)]="searchText">
+
+  </div>
+
+  <div class="category-buttons">
+
+    <button
+      *ngFor="let category of categories"
+      [class.active]="selectedCategory === category"
+      (click)="selectedCategory = category">
+
+      {{ category }}
+
+    </button>
+
+  </div>
+
+  <div class="faq-list">
+
+    <details
+      *ngFor="let faq of faqs">
+
+      <summary>
+
+        {{ faq.question }}
+
+      </summary>
+
+      <p>
+
+        {{ faq.answer }}
+
+      </p>
+
+    </details>
+
+  </div>
+
+
+  <app-chatbot></app-chatbot>
+
+  
+</div>

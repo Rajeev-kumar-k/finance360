@@ -21,6 +21,9 @@
 
         <mat-select [(value)]="selectedYear">
 
+          <mat-option [value]="0">
+  All Years
+</mat-option>
           <mat-option
             *ngFor="let year of years"
             [value]="year">
@@ -38,6 +41,9 @@
         <mat-label>Month</mat-label>
 
         <mat-select [(value)]="selectedMonth">
+          <mat-option value="">
+  All Months
+</mat-option>
 
           <mat-option
             *ngFor="let month of months"
@@ -97,30 +103,52 @@
 
   <div class="table-header">
 
-    <div></div>
+    
 
-    <mat-form-field
-      appearance="outline"
-      class="search-box">
+  <mat-form-field
+    appearance="outline"
+    class="search-box">
 
-      <mat-label>
-        Search Claims
-      </mat-label>
+    <mat-label>
+      Search Claims
+    </mat-label>
 
-      <input
-        matInput
-        placeholder="Report ID / Status">
+    <input
+      matInput
+      [(ngModel)]="searchText"
+      placeholder="Report ID / Status">
 
-    </mat-form-field>
+  </mat-form-field>
 
-  </div>
+  <mat-form-field
+    appearance="outline"
+    class="status-filter">
+
+    <mat-label>
+      Status
+    </mat-label>
+
+    <mat-select
+      [(value)]="selectedStatus">
+
+      <mat-option
+        *ngFor="let status of statuses"
+        [value]="status">
+
+        {{ status }}
+
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+
+</div>
  
-  <mat-card *ngIf="isLoading" class="table-card">
-  Loading claims...
-</mat-card>
+
 
 <mat-card
-  *ngIf="!isLoading"
+
   class="table-card">
 
     <table>
@@ -145,7 +173,7 @@
 
       <tbody>
 
-        <tr *ngFor="let claim of claims">
+        <tr *ngFor="let claim of filteredClaims">
 
           <td>{{ claim.report_id }}</td>
 
@@ -165,20 +193,20 @@
 
           <td>
 
-            <button
-              mat-flat-button
-              color="primary"
-              (click)="viewClaim(claim.id)">
+           <button
+            mat-raised-button
+            color="primary"
+            class="view-btn"
+            (click)="viewClaim(claim.id)">
 
-              View
+            👁️ View
 
-            </button>
-
+          </button>
           </td>
 
         </tr>
 
-        <tr *ngIf="claims.length === 0">
+        <tr *ngIf="filteredClaims.length === 0">
 
           <td
             colspan="5"

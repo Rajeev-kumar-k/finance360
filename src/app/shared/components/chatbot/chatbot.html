@@ -1,0 +1,63 @@
+
+
+ <div
+  class="chatbot-button"
+  (click)="toggleChat()">
+
+  🤖
+
+</div>
+
+
+
+<div
+  class="chat-window"
+  *ngIf="isOpen">
+
+  <div class="chat-header">
+
+    <div>
+
+      <div class="title">
+        Finance360 Assistant
+      </div>
+
+      
+
+    </div>
+
+    <button
+      class="close-btn"
+      (click)="toggleChat()">
+
+      ✕
+
+    </button>
+
+  </div>
+
+  <div class="chat-body">
+
+    <div class="bot-message">
+
+      👋 Hello! How can I help you today?
+
+    </div>
+
+  </div>
+
+  <div class="chat-footer">
+
+    <input
+      type="text"
+      placeholder="Type your message..." />
+
+    <button>
+
+      Send
+
+    </button>
+
+  </div>
+
+</div>

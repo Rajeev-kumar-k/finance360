@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ChangeDetectorRef
 } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -36,15 +37,21 @@ export class Dashboard implements OnInit {
   claims: any[] = [];
 
   isLoading = true;
+  searchText = '';
+  selectedStatus = 'All';
 
-  selectedYear = new Date().getFullYear();
+  selectedYear = 0;
 
-  selectedMonth = new Date().toLocaleString(
-    'default',
-    {
-      month: 'long'
-    }
-  );
+  selectedMonth = '';
+
+
+  statuses = [
+  'All',
+  'Raised',
+  'Pending',
+  'Approved',
+  'Rejected'
+];
 
   years = [
     2024,
@@ -69,7 +76,8 @@ export class Dashboard implements OnInit {
 
   constructor(
     private claimService: ClaimService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -86,18 +94,37 @@ export class Dashboard implements OnInit {
       .getClaims()
       .subscribe({
 
-        next: (data: any) => {
+       next: (data: any) => {
 
-          console.log(
-            'Claims API Response:',
-            data
-          );
+  console.log(
+    'Claims API Response:',
+    data
+  );
 
-          this.claims = data;
+  this.claims = [...data].sort(
+  (a, b) =>
+    new Date(b.submission_date).getTime() -
+    new Date(a.submission_date).getTime()
+);
 
-          this.isLoading = false;
+    console.log(
+    'Before isLoading:',
+    this.isLoading
+  );
 
-        },
+  this.cdr.detectChanges();
+  console.log(
+  'Change detection triggered'
+);
+
+  this.isLoading = false;
+
+    console.log(
+    'After isLoading:',
+    this.isLoading
+  );
+
+},
 
         error: (err) => {
 
@@ -189,7 +216,8 @@ export class Dashboard implements OnInit {
           this.dialog.open(
             ViewClaimDialog,
             {
-              width: '1000px',
+             width: '1150px',
+              maxWidth: '95vw',
               maxHeight: '90vh',
               data: claim
             }
@@ -212,4 +240,103 @@ export class Dashboard implements OnInit {
 
   }
 
+get filteredClaims() {
+
+  let filtered = this.claims;
+
+  // Search Filter
+
+  if (this.searchText) {
+
+    const search =
+      this.searchText.toLowerCase();
+
+    filtered =
+      filtered.filter(claim =>
+
+        claim.report_id
+          ?.toLowerCase()
+          .includes(search)
+
+        ||
+
+        claim.status
+          ?.toLowerCase()
+          .includes(search)
+
+        ||
+
+        claim.employee_name
+          ?.toLowerCase()
+          .includes(search)
+
+      );
+
+  }
+
+  // Status Filter
+
+  if (
+    this.selectedStatus !== 'All'
+  ) {
+
+    filtered =
+      filtered.filter(
+        claim =>
+          claim.status ===
+          this.selectedStatus
+      );
+
+  }
+
+  // Year Filter
+
+  if (this.selectedYear) {
+
+    filtered =
+      filtered.filter(claim => {
+
+        const claimYear =
+          new Date(
+            claim.submission_date
+          ).getFullYear();
+
+        return (
+          claimYear ===
+          this.selectedYear
+        );
+
+      });
+
+  }
+
+  // Month Filter
+
+  if (this.selectedMonth) {
+
+    filtered =
+      filtered.filter(claim => {
+
+        const claimMonth =
+          new Date(
+            claim.submission_date
+          ).toLocaleString(
+            'default',
+            {
+              month: 'long'
+            }
+          );
+
+        return (
+          claimMonth ===
+          this.selectedMonth
+        );
+
+      });
+
+  }
+
+  return filtered;
+
+}
 }

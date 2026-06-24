@@ -13,6 +13,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { OnInit } from '@angular/core';
 import { ClaimService } from '../../../../core/services/claim';
+import { ChangeDetectorRef } from '@angular/core';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-create-claim',
@@ -25,7 +29,9 @@ import { ClaimService } from '../../../../core/services/claim';
     MatInputModule,
     MatSelectModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   templateUrl: './create-claim.html',
   styleUrl: './create-claim.scss',
@@ -34,10 +40,11 @@ export class CreateClaim implements OnInit {
 
    constructor(
   private dialog: MatDialog,
-  private claimService: ClaimService
+  private claimService: ClaimService,
+   private cdr: ChangeDetectorRef
 ) {}
 
-selectedFile!: File;
+selectedFiles: File[] = [];
 
 ngOnInit(): void {
 
@@ -118,12 +125,20 @@ backStep() {
 addItem() {
 
   if (
-    !this.expense.category ||
-    !this.expense.merchant ||
-    !this.expense.amount
-  ) {
-    return;
-  }
+  !this.expense.reportId ||
+  !this.expense.date ||
+  !this.expense.category ||
+  !this.expense.merchant ||
+  !this.expense.amount
+) {
+
+  alert(
+    'Please fill all required fields'
+  );
+
+  return;
+
+}
 
   this.expenseItems.push({
     id: this.expenseItems.length + 1,
@@ -151,20 +166,24 @@ onFileSelected(
   event: any
 ) {
 
-  if (
-    event.target.files &&
-    event.target.files.length > 0
-  ) {
+  const files =
+    Array.from(
+      event.target.files
+    ) as File[];
 
-    this.selectedFile =
-      event.target.files[0];
+  this.selectedFiles.push(
+    ...files
+  );
 
-    console.log(
-      'Selected File:',
-      this.selectedFile.name
-    );
+  console.log(
+    'Selected Files:',
+    this.selectedFiles
+  );
 
-  }
+  console.log(
+    'Files Count:',
+    this.selectedFiles.length
+  );
 
 }
 
@@ -174,10 +193,49 @@ removeItem(index: number) {
 
 submitClaim() {
 
+  if (!this.selectedCostCenter) {
+
+    alert(
+      'Please select a Cost Center'
+    );
+
+    return;
+
+  }
+
+  if (!this.businessPurpose.trim()) {
+
+    alert(
+      'Please enter Purpose of Visit / Expense'
+    );
+
+    return;
+
+  }
+
+  if (this.expenseItems.length === 0) {
+
+    alert(
+      'Please add at least one Expense Item'
+    );
+
+    return;
+
+  }
+
+  if (this.selectedFiles.length === 0){
+
+    alert(
+      'Please upload a receipt'
+    );
+
+    return;
+
+  }
+
   const payload = {
 
-    report_id:
-      this.expense.reportId,
+    
 
     employee_name:
       this.employee,
@@ -242,45 +300,51 @@ submitClaim() {
         );
 
         // No file selected
-        if (!this.selectedFile) {
+        let uploadedCount = 0;
+
+for (const file of this.selectedFiles) {
+
+  this.claimService
+    .uploadAttachment(
+      claimResponse.id,
+      file
+    )
+    .subscribe({
+
+      next: () => {
+
+        uploadedCount++;
+
+        console.log(
+          'Attachment Uploaded:',
+          file.name
+        );
+
+        if (
+          uploadedCount ===
+          this.selectedFiles.length
+        ) {
 
           this.showSuccessDialog(
-            claimResponse.id
+            claimResponse.report_id
           );
 
-          return;
         }
 
-        // Upload file
-        this.claimService
-          .uploadAttachment(
-            claimResponse.id,
-            this.selectedFile
-          )
-          .subscribe({
+      },
 
-            next: () => {
+      error: (err) => {
 
-              console.log(
-                'Attachment Uploaded'
-              );
+        console.error(
+          'Attachment Upload Failed',
+          err
+        );
 
-              this.showSuccessDialog(
-                claimResponse.id
-              );
+      }
 
-            },
+    });
 
-            error: (err) => {
-
-              console.error(
-                'Attachment Upload Failed',
-                err
-              );
-
-            }
-
-          });
+}
 
       },
 
@@ -298,37 +362,87 @@ submitClaim() {
 }
 
 showSuccessDialog(
-  claimId: number
+  reportId: string
 ) {
 
-  this.dialog.open(
-    SuccessDialog,
-    {
-      width: '500px',
-      data: {
-        reportId: claimId
+  const dialogRef =
+    this.dialog.open(
+      SuccessDialog,
+      {
+        width: '500px',
+        disableClose: false,
+        data: {
+           reportId: reportId
+        }
       }
-    }
-  );
+    );
+
+dialogRef
+  .afterClosed()
+  .subscribe(() => {
+
+    console.log(
+      'DIALOG CLOSED'
+    );
+
+    setTimeout(() => {
+
+      this.resetForm();
+
+    }, 0);
+
+  });
 
 }
 
-openSuccessDialog(
-  claimId: number
-) {
+resetForm() {
 
-  this.dialog.open(
-    SuccessDialog,
-    {
-      width: '500px',
-      disableClose: false,
-      data: {
-        reportId: claimId
-      }
-    }
-  );
+  console.log('RESET FORM CALLED');
+
+   console.log('BEFORE RESET:', this.currentStep);
+
+  this.currentStep = 1;
+    console.log('AFTER RESET:', this.currentStep);
+
+  this.businessPurpose = '';
+
+  this.selectedCostCenter = '';
+
+  this.totalAmount = '';
+
+  this.expenseItems = [];
+
+  this.selectedFiles = [];
+
+  this.expense = {
+
+    reportId:
+      'RPT-' +
+      Math.floor(
+        Math.random() * 100000
+      ),
+
+    date:
+      new Date()
+        .toISOString()
+        .split('T')[0],
+
+    category: '',
+
+    merchant: '',
+
+    amount: '',
+
+    description: ''
+
+  };
+
+   this.cdr.detectChanges();
+
 
 }
+
+
 
 saveDraft() {
 

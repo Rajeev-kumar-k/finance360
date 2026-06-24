@@ -90,34 +90,42 @@
   </table>
 
   <h3>
-    Uploaded Receipts
-  </h3>
+  Uploaded Receipts
+</h3>
 
- <div
+<div
   *ngFor="let file of data.attachments"
   class="attachment">
 
-  <h4>
-    {{ file.original_file_name }}
-  </h4>
+  <div class="attachment-info">
 
-  <img
-    *ngIf="file.file_type.startsWith('image')"
-    [src]="'http://127.0.0.1:8000/' + file.file_path"
-    class="receipt-preview">
+    <span>
+      📎 {{ file.original_file_name }}
+    </span>
+
+  </div>
 
   <a
-    *ngIf="!file.file_type.startsWith('image')"
+    mat-raised-button
+    color="primary"
     [href]="'http://127.0.0.1:8000/' + file.file_path"
+    download
     target="_blank">
 
-    Open Attachment
+    ⬇ Download
 
   </a>
 
 </div>
 
-  <div class="dialog-actions">
+<div
+  *ngIf="data.attachments.length === 0">
+
+  No Attachments Available
+
+</div>
+
+<div class="dialog-actions">
 
     <button
       mat-flat-button
