@@ -1,0 +1,198 @@
+<div class="dialog-container">
+
+  <h2>
+    Travel Request Details
+  </h2>
+
+  <div class="detail-grid">
+
+    <div>
+      <strong>Request ID:</strong>
+      {{data.request_id}}
+    </div>
+
+    <div>
+      <strong>Employee:</strong>
+      {{data.employee_name}}
+    </div>
+
+    <div>
+      <strong>Email:</strong>
+      {{data.employee_email}}
+    </div>
+
+    <div>
+      <strong>GPN:</strong>
+      {{data.gpn}}
+    </div>
+
+    <div>
+      <strong>Department:</strong>
+      {{data.department}}
+    </div>
+
+    <div>
+      <strong>Manager:</strong>
+      {{data.manager}}
+    </div>
+
+    <div>
+      <strong>Project Code:</strong>
+      {{data.project_code}}
+    </div>
+
+    <div>
+      <strong>Status:</strong>
+      {{data.status}}
+    </div>
+
+  </div>
+
+  <h3>
+    Travel Details
+  </h3>
+
+  <div class="detail-grid">
+
+    <div>
+      <strong>Destination City:</strong>
+      {{data.destination_city}}
+    </div>
+
+    <div>
+      <strong>Destination Country:</strong>
+      {{data.destination_country}}
+    </div>
+
+    <div>
+      <strong>Start Date:</strong>
+      {{data.travel_start_date}}
+    </div>
+
+    <div>
+      <strong>End Date:</strong>
+      {{data.travel_end_date}}
+    </div>
+
+    <div>
+      <strong>Purpose:</strong>
+      {{data.purpose}}
+    </div>
+
+  </div>
+
+  <h3>
+    Budget Summary
+  </h3>
+
+  <table>
+
+    <thead>
+
+      <tr>
+
+        <th>Hotel</th>
+
+        <th>Flight</th>
+
+        <th>Local Travel</th>
+
+        <th>Food</th>
+
+        <th>Total</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr>
+
+        <td>₹{{data.hotel_cost}}</td>
+
+        <td>₹{{data.flight_cost}}</td>
+
+        <td>₹{{data.local_travel_cost}}</td>
+
+        <td>₹{{data.food_cost}}</td>
+
+        <td>
+
+          ₹{{
+            data.hotel_cost +
+            data.flight_cost +
+            data.local_travel_cost +
+            data.food_cost
+          }}
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+  <h3>
+    Approval Mail
+  </h3>
+
+  <div
+    *ngFor="
+      let file of
+      data.approval_attachments
+    "
+    class="attachment">
+
+    <div class="attachment-info">
+
+      <span>
+
+        📎
+        {{file.original_file_name}}
+
+      </span>
+
+    </div>
+
+    <a
+      mat-raised-button
+      color="primary"
+      [href]="
+        'http://127.0.0.1:8000/' +
+        file.file_path
+      "
+      download
+      target="_blank">
+
+      ⬇ Download
+
+    </a>
+
+  </div>
+
+  <div
+    *ngIf="
+      !data.approval_attachments ||
+      data.approval_attachments.length === 0
+    ">
+
+    No Approval Mail Uploaded
+
+  </div>
+
+  <div class="dialog-actions">
+
+    <button
+      mat-flat-button
+      color="primary"
+      mat-dialog-close>
+
+      Close
+
+    </button>
+
+  </div>
+
+</div>

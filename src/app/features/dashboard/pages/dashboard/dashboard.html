@@ -145,8 +145,7 @@
 
 </div>
  
-
-
+<h2> Reimbursement Details</h2>
 <mat-card
 
   class="table-card">
@@ -226,7 +225,113 @@
     </table>
 
   </mat-card>
+<h2>Travel reques Details</h2>
+  <mat-card class="table-card">
 
+  
+
+  <table>
+
+    <thead>
+
+      <tr>
+
+        <th>Request ID</th>
+
+        
+        <th>Destination</th>
+
+        <th>Travel Dates</th>
+
+        <th>Status</th>
+
+        <th>Action</th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr
+        *ngFor="
+          let travel of
+          travelRequests
+        ">
+
+        <td>
+          {{ travel.request_id }}
+        </td>
+
+        <td>
+          {{ travel.destination_city }}
+        </td>
+
+        <td>
+
+          {{
+            travel.travel_start_date
+          }}
+
+          -
+
+          {{
+            travel.travel_end_date
+          }}
+
+        </td>
+
+        <td>
+
+          <span class="status">
+
+            {{
+              travel.status
+            }}
+
+          </span>
+
+        </td>
+
+        <td>
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="view-btn"
+            (click)="viewTravelRequest(travel.id)">
+
+            👁️ View
+
+          </button>
+
+        </td>
+
+      </tr>
+
+      <tr
+        *ngIf="
+          travelRequests.length === 0
+        ">
+
+        <td
+          colspan="5"
+          style="
+            text-align:center;
+            padding:30px;
+          ">
+
+          No Travel Requests Found
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</mat-card>
   
  
 

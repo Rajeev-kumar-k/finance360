@@ -15,8 +15,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 
 import { ClaimService } from '../../../../core/services/claim';
+import { TravelService }
+from '../../../../core/services/travel';
 
 import { ViewClaimDialog } from '../../../../shared/components/view-claim-dialog/view-claim-dialog';
+
+import {
+  ViewTravelDialog
+}
+from
+'../../../../shared/components/view-travel-dialog/view-travel-dialog';
+
+
 
 @Component({
   selector: 'app-dashboard',
@@ -35,6 +45,7 @@ import { ViewClaimDialog } from '../../../../shared/components/view-claim-dialog
 export class Dashboard implements OnInit {
 
   claims: any[] = [];
+  travelRequests: any[] = [];
 
   isLoading = true;
   searchText = '';
@@ -76,6 +87,7 @@ export class Dashboard implements OnInit {
 
   constructor(
     private claimService: ClaimService,
+    private travelService: TravelService,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef
   ) {}
@@ -83,6 +95,7 @@ export class Dashboard implements OnInit {
   ngOnInit(): void {
 
     this.loadClaims();
+    this.loadTravelRequests();
 
   }
 
@@ -140,6 +153,37 @@ export class Dashboard implements OnInit {
       });
 
   }
+
+  loadTravelRequests() {
+
+  this.travelService
+    .getTravelRequests()
+    .subscribe({
+
+      next: (data: any) => {
+
+        console.log(
+          'Travel Requests:',
+          data
+        );
+
+        this.travelRequests =
+          data;
+
+      },
+
+      error: (err) => {
+
+        console.error(
+          'Travel Request Error:',
+          err
+        );
+
+      }
+
+    });
+
+}
 
   get totalRaised() {
 
@@ -239,6 +283,32 @@ export class Dashboard implements OnInit {
       });
 
   }
+
+  viewTravelRequest(
+  id: number
+) {
+
+  this.travelService
+    .getTravelRequestById(id)
+    .subscribe({
+
+      next: (travel) => {
+
+        this.dialog.open(
+          ViewTravelDialog,
+          {
+             width: '1150px',
+              maxWidth: '95vw',
+              maxHeight: '90vh',
+            data: travel
+          }
+        );
+
+      }
+
+    });
+
+}
 
 get filteredClaims() {
 

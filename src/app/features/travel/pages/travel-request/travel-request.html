@@ -34,21 +34,13 @@
           readonly>
       </div>
 
-      
-
       <div>
-  <label>Employee Email</label>
-  <input
-    [value]="employeeEmail"
-    readonly>
-</div>
-
-    <div>
-    <label>GPN</label>
-    <input
-        [value]="gpn"
-        readonly>
-    </div>
+        <label>Employee ID</label>
+        <input
+          [value]="employeeId"
+          readonly>
+      </div>
+      
 
       <div>
         <label>Department</label>
@@ -185,6 +177,44 @@
       </button>
 
     </div>
+
+    <div
+  class="success-overlay"
+  *ngIf="showDialog">
+
+  <div class="success-dialog">
+
+    <div class="success-icon">
+
+      ✓
+
+    </div>
+
+    <h2>
+      Travel Request Submitted
+    </h2>
+
+    <p>
+
+      Request ID:
+
+      <strong>
+        {{submittedRequestId}}
+      </strong>
+
+    </p>
+
+    <button
+      class="close-btn"
+      (click)="showDialog = false">
+
+      Close
+
+    </button>
+
+  </div>
+
+</div>
 
   </div>
 
