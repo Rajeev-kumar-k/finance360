@@ -70,9 +70,9 @@ ngOnInit(): void {
 
 }
 
-  employee = 'Rajeev Kumar';
+  employee = 'Employee X';
 
-  department = 'Technology Consulting';
+  department = 'EDS';
 
   manager = 'Arjun Dev';
 

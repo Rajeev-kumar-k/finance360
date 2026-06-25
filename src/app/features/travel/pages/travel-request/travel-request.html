@@ -56,6 +56,14 @@
           readonly>
       </div>
 
+      <div>
+        <label>Gpn</label>
+        <input
+          [value]="gpn"
+          readonly>
+      </div>
+
+
     </div>
 
     <div class="section-title">
@@ -142,20 +150,41 @@
 
     <div class="upload-box">
 
-      <input
-        type="file"
-        accept=".pdf,.jpg,.jpeg,.png,.msg,.eml"
-        (change)="onApprovalMailSelected($event)">
+  <div class="upload-icon">
+    ☁️
+  </div>
 
-      <div
-        *ngIf="approvalMail">
+  <h3>
+    Upload Approval Mail
+  </h3>
 
-        📎
-        {{ approvalMail.name }}
+  <p>
+    PDF, Email, JPG or PNG
+    <br>
+    Maximum file size: 10 MB
+  </p>
 
-      </div>
+  <label class="upload-btn">
 
-    </div>
+    Choose File
+
+    <input
+      type="file"
+      accept=".pdf,.jpg,.jpeg,.png,.msg,.eml"
+      (change)="onApprovalMailSelected($event)"
+      hidden>
+
+  </label>
+
+  <div
+    class="selected-file"
+    *ngIf="approvalMail">
+
+    ✓ {{ approvalMail.name }}
+
+  </div>
+
+</div>
 
     <div class="section-title">
       Additional Remarks
@@ -178,7 +207,10 @@
 
     </div>
 
-    <div
+    
+
+</div>
+<div
   class="success-overlay"
   *ngIf="showDialog">
 
@@ -213,8 +245,6 @@
     </button>
 
   </div>
-
-</div>
 
   </div>
 

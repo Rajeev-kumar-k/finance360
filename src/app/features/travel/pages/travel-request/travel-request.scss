@@ -143,35 +143,111 @@ textarea {
 
 .upload-box {
 
-  border: 2px dashed #ffe600;
+  border: 2px dashed #5f6885;
 
-  border-radius: 16px;
+  background: #383c4f;
 
-  padding: 24px;
+  border-radius: 18px;
+
+  padding: 36px 24px;
 
   text-align: center;
 
-  color: white;
+  transition: all .25s ease;
 
-  background: rgba(255, 230, 0, 0.03);
 }
 
-.upload-box input {
+.upload-box:hover {
 
-  background: transparent;
+  border-color: #ffe600;
+
+  background: #42465a;
+
+}
+
+.upload-icon {
+
+  font-size: 48px;
 
   margin-bottom: 12px;
+
 }
 
-.upload-box div {
+.upload-box h3 {
 
-  margin-top: 10px;
+  margin: 0;
 
-  color: #ffe600;
+  color: #ffffff;
+
+  font-size: 20px;
 
   font-weight: 600;
+
 }
 
+.upload-box p {
+
+  margin: 12px 0 22px;
+
+  color: #c8ccd8;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+}
+
+.upload-btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 12px 24px;
+
+  background: #ffe600;
+
+  color: #000;
+
+  border-radius: 10px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .25s;
+
+}
+
+.upload-btn:hover {
+
+  background: #fff176;
+
+  transform: translateY(-2px);
+
+}
+
+.selected-file {
+
+  margin-top: 22px;
+
+  padding: 12px 18px;
+
+  background: rgba(76, 175, 80, .15);
+
+  border: 1px solid rgba(76,175,80,.45);
+
+  border-radius: 10px;
+
+  color: #81c784;
+
+  font-weight: 500;
+
+  word-break: break-word;
+
+}
 /* =========================
    BUDGET SUMMARY
 ========================= */

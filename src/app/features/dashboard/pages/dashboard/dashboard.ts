@@ -25,6 +25,8 @@ import {
 }
 from
 '../../../../shared/components/view-travel-dialog/view-travel-dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -37,7 +39,9 @@ from
     MatCardModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    MatTooltipModule
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'

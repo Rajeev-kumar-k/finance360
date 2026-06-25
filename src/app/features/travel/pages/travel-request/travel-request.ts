@@ -31,20 +31,20 @@ submittedRequestId = '';
     );
 
   employeeName =
-    'Rajeev Kumar';
+    'Employee X';
 
   employeeId=
     'EMP-001';
 
   
   employeeEmail =
-  'rajeev.kumar@ey.com';
+  'employee.x@ey.com';
 
  gpn =
   'GPN123456';
 
   department =
-    'Technology Consulting';
+    'EDS';
 
   projectCode=
   'PR001';
@@ -264,10 +264,17 @@ showSuccessDialog(
   requestId: string
 ) {
 
+   console.log('Dialog called');
+
   this.submittedRequestId =
     requestId;
 
   this.showDialog = true;
+  
+   console.log(
+    this.showDialog
+  );
+
 
   this.resetForm();
 

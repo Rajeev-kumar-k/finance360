@@ -192,15 +192,18 @@
 
           <td>
 
-           <button
-            mat-raised-button
-            color="primary"
-            class="view-btn"
-            (click)="viewClaim(claim.id)">
+          <button
+  mat-icon-button
+  class="view-btn"
+  matTooltip="View Claim"
+  (click)="viewClaim(claim.id)">
 
-            👁️ View
+  <mat-icon>
+    visibility
+  </mat-icon>
 
-          </button>
+</button>
+          
           </td>
 
         </tr>
@@ -295,15 +298,18 @@
 
         <td>
 
-          <button
-            mat-raised-button
-            color="primary"
-            class="view-btn"
-            (click)="viewTravelRequest(travel.id)">
+         <button
+  mat-icon-button
+  color="primary"
+  class="view-btn"
+  (click)="viewTravelRequest(travel.id)"
+  matTooltip="View Details">
 
-            👁️ View
+  <span class="material-icons">
+    visibility
+  </span>
 
-          </button>
+</button>
 
         </td>
 
