@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+
+import {
+  Component,
+  ChangeDetectorRef,
+  ElementRef,
+  ViewChild
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { MatCardModule } from '@angular/material/card';
@@ -13,7 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { OnInit } from '@angular/core';
 import { ClaimService } from '../../../../core/services/claim';
-import { ChangeDetectorRef } from '@angular/core';
+
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -47,7 +53,11 @@ export class CreateClaim implements OnInit {
    private cdr: ChangeDetectorRef
 ) {}
 
+  @ViewChild('receiptInput')
+  receiptInput!: ElementRef<HTMLInputElement>;
+
 selectedFiles: File[] = [];
+allSelectedFiles: File[] = [];
 isAiLoading = false;
 
 ngOnInit(): void {
@@ -129,12 +139,12 @@ backStep() {
 addItem() {
 
   if (
-  !this.expense.reportId ||
-  !this.expense.date ||
-  !this.expense.category ||
-  !this.expense.merchant ||
-  !this.expense.amount
-) {
+    !this.expense.reportId ||
+    !this.expense.date ||
+    !this.expense.category ||
+    !this.expense.merchant ||
+    !this.expense.amount
+  ) {
 
   alert(
     'Please fill all required fields'
@@ -144,19 +154,77 @@ addItem() {
 
 }
 
+if (
+  this.selectedFiles.length === 0
+) {
+
+  alert(
+    'Please upload a receipt for this expense item'
+  );
+
+  return;
+
+}
+
   this.expenseItems.push({
-    id: this.expenseItems.length + 1,
-    ...this.expense
+
+    id:
+      this.expenseItems.length + 1,
+
+    reportId:
+      this.expense.reportId,
+
+    date:
+      typeof this.expense.date === 'string'
+        ? this.expense.date.split('T')[0]
+        : new Date(this.expense.date)
+            .toISOString()
+            .split('T')[0],
+
+    category:
+      this.expense.category,
+
+    merchant:
+      this.expense.merchant,
+
+    amount:
+      Number(this.expense.amount),
+
+    description:
+      this.expense.description
+
   });
 
+  console.log(
+    this.expenseItems
+  );
+
   this.expense = {
-    reportId: this.expense.reportId,
-    date: this.expense.date,
+
+    reportId:
+      this.expense.reportId,
+
+    date:
+      new Date()
+        .toISOString()
+        .split('T')[0],
+
     category: '',
+
     merchant: '',
+
     amount: '',
+
     description: ''
+
   };
+
+  // Clear only current receipt
+  this.selectedFiles = [];
+
+  this.receiptInput
+    .nativeElement.value = '';
+
 }
 
 get totalExpense() {
@@ -165,6 +233,8 @@ get totalExpense() {
     0
   );
 }
+
+
 onFileSelected(
   event: any
 ) {
@@ -174,19 +244,33 @@ onFileSelected(
     event.target.files.length > 0
   ) {
 
-    this.selectedFiles =
-      Array.from(event.target.files);
+   const newFiles =
+  Array.from(
+    event.target.files as FileList
+  ) as File[];
+    // Files for current expense
+    this.selectedFiles = newFiles;
+
+    // Files for entire claim
+    this.allSelectedFiles.push(
+      ...newFiles
+    );
 
     console.log(
-      'Selected Files:',
+      'Current Receipt:',
       this.selectedFiles
+    );
+
+    console.log(
+      'All Receipts:',
+      this.allSelectedFiles
     );
 
     this.isAiLoading = true;
 
     this.claimService
       .extractReceipt(
-        this.selectedFiles[0]
+        newFiles[0]
       )
       .subscribe({
 
@@ -277,15 +361,27 @@ submitClaim() {
 
   }
 
-  if (this.selectedFiles.length === 0){
+  // if (this.selectedFiles.length === 0){
 
-    alert(
-      'Please upload a receipt'
-    );
+  //   alert(
+  //     'Please upload a receipt'
+  //   );
 
-    return;
+  //   return;
 
-  }
+
+  // }
+  if (
+  this.allSelectedFiles.length === 0
+) {
+
+  alert(
+    'Please add at least one receipt.'
+  );
+
+  return;
+
+}
 
   const payload = {
 
@@ -342,6 +438,9 @@ submitClaim() {
 
   };
 
+  console.log("Submitting payload:");
+console.log(JSON.stringify(payload, null, 2));
+
   this.claimService
     .createClaim(payload)
     .subscribe({
@@ -356,7 +455,14 @@ submitClaim() {
         // No file selected
         let uploadedCount = 0;
 
-for (const file of this.selectedFiles) {
+        console.log(
+  'Files to upload:',
+  this.selectedFiles.length
+);
+
+console.log(this.selectedFiles);
+
+for (const file of this.allSelectedFiles) {
 
   this.claimService
     .uploadAttachment(
@@ -376,7 +482,7 @@ for (const file of this.selectedFiles) {
 
         if (
           uploadedCount ===
-          this.selectedFiles.length
+          this.allSelectedFiles.length
         ) {
 
           this.showSuccessDialog(
@@ -451,12 +557,11 @@ dialogRef
 
 resetForm() {
 
-  console.log('RESET FORM CALLED');
-
-   console.log('BEFORE RESET:', this.currentStep);
+  console.log(
+    'RESET FORM CALLED'
+  );
 
   this.currentStep = 1;
-    console.log('AFTER RESET:', this.currentStep);
 
   this.businessPurpose = '';
 
@@ -467,6 +572,10 @@ resetForm() {
   this.expenseItems = [];
 
   this.selectedFiles = [];
+
+  this.allSelectedFiles = [];
+
+  this.receiptInput.nativeElement.value = '';
 
   this.expense = {
 
@@ -491,11 +600,9 @@ resetForm() {
 
   };
 
-   this.cdr.detectChanges();
-
+  this.cdr.detectChanges();
 
 }
-
 
 
 saveDraft() {
