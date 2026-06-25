@@ -76,4 +76,23 @@ loadDraft(employeeId: string) {
 
 }
 
+extractReceipt(
+  file: File
+) {
+
+  const formData =
+    new FormData();
+
+  formData.append(
+    'file',
+    file
+  );
+
+  return this.http.post(
+    `${this.apiUrl}/ai/extract-receipt`,
+    formData
+  );
+
+}
+
 }

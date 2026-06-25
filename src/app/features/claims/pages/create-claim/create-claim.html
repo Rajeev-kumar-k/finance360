@@ -195,6 +195,13 @@
 
 </div>
 
+<div
+  *ngIf="!isAiLoading && expense.merchant"
+  class="ai-success">
+
+  🤖 AI extracted receipt details successfully.
+
+</div>
       <mat-form-field appearance="outline">
         <mat-label>Report ID</mat-label>
         <input matInput [(ngModel)]="expense.reportId">
@@ -225,7 +232,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Category</mat-label>
 
-        <mat-select [(value)]="expense.category">
+        <mat-select [(ngModel)]="expense.category">
 
           @for(category of categories; track category){
 

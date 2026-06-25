@@ -19,6 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-create-claim',
   standalone: true,
@@ -47,6 +48,7 @@ export class CreateClaim implements OnInit {
 ) {}
 
 selectedFiles: File[] = [];
+isAiLoading = false;
 
 ngOnInit(): void {
 
@@ -163,29 +165,79 @@ get totalExpense() {
     0
   );
 }
-
 onFileSelected(
   event: any
 ) {
 
-  const files =
-    Array.from(
-      event.target.files
-    ) as File[];
+  if (
+    event.target.files &&
+    event.target.files.length > 0
+  ) {
 
-  this.selectedFiles.push(
-    ...files
-  );
+    this.selectedFiles =
+      Array.from(event.target.files);
 
-  console.log(
-    'Selected Files:',
-    this.selectedFiles
-  );
+    console.log(
+      'Selected Files:',
+      this.selectedFiles
+    );
 
-  console.log(
-    'Files Count:',
-    this.selectedFiles.length
-  );
+    this.isAiLoading = true;
+
+    this.claimService
+      .extractReceipt(
+        this.selectedFiles[0]
+      )
+      .subscribe({
+
+        next: (data: any) => {
+
+          this.isAiLoading = false;
+
+          console.log(
+            'AI Response:',
+            data
+          );
+
+          this.expense = {
+
+            ...this.expense,
+
+            date:
+              data.date,
+
+            category:
+              data.category,
+
+            merchant:
+              data.merchant,
+
+            amount:
+              data.amount,
+
+            description:
+              data.description
+
+          };
+
+          this.cdr.detectChanges();
+
+        },
+
+        error: (err) => {
+
+          this.isAiLoading = false;
+
+          console.error(
+            'AI Extraction Failed',
+            err
+          );
+
+        }
+
+      });
+
+  }
 
 }
 
