@@ -153,24 +153,47 @@
 
     <div class="expense-form">
 
-      <div class="upload-box">
+<div class="upload-box">
 
-        <span class="upload-icon">
+   <span class="upload-icon">
           📁
         </span>
+  <h3>
+    Upload Expense Receipts
+  </h3>
 
-        <h3>Upload Receipts</h3>
+  <p>
+    Drag & Drop or choose one or more files
+    <br>
+    Supported: PDF, JPG, PNG
+  </p>
 
-        <p>
-          Drag & Drop or Click to Upload
-        </p>
+  <label class="upload-btn">
 
-      <input
-  type="file"
-  multiple
-  (change)="onFileSelected($event)">
+    Choose Files
 
-      </div>
+    <input
+      type="file"
+      multiple
+      hidden
+      (change)="onFileSelected($event)">
+
+  </label>
+
+  <div
+    class="selected-files"
+    *ngIf="selectedFiles.length">
+
+    <div
+      *ngFor="let file of selectedFiles">
+
+      ✓ {{ file.name }}
+
+    </div>
+
+  </div>
+
+</div>
 
       <mat-form-field appearance="outline">
         <mat-label>Report ID</mat-label>

@@ -17,11 +17,13 @@ import { ChangeDetectorRef } from '@angular/core';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-claim',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     MatCardModule,
     DatePipe,
