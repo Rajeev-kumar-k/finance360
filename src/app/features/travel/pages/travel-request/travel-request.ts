@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TravelService }
 from '../../../../core/services/travel';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-travel-request',
@@ -17,7 +18,9 @@ from '../../../../core/services/travel';
 export class TravelRequest {
 
   constructor(
-  private travelService: TravelService
+  private travelService: TravelService,
+  private cdr: ChangeDetectorRef
+
 ) {}
 
   showDialog = false;
@@ -264,21 +267,24 @@ showSuccessDialog(
   requestId: string
 ) {
 
-   console.log('Dialog called');
+  console.log('Dialog called');
 
-  this.submittedRequestId =
-    requestId;
+  this.submittedRequestId = requestId;
 
   this.showDialog = true;
-  
-   console.log(
-    this.showDialog
-  );
 
+  this.cdr.detectChanges();
+
+}
+
+closeDialog() {
+
+  this.showDialog = false;
 
   this.resetForm();
 
 }
+
 resetForm() {
 
   this.destinationCity = '';
