@@ -8,7 +8,7 @@
 
     <input
       type="text"
-      placeholder="Search topics"
+      placeholder="Search topics..."
       [(ngModel)]="searchText">
 
   </div>
@@ -29,7 +29,7 @@
   <div class="faq-list">
 
     <details
-      *ngFor="let faq of faqs">
+      *ngFor="let faq of filteredFaqs">
 
       <summary>
 
@@ -45,10 +45,16 @@
 
     </details>
 
-  </div>
+    <div
+      class="no-results"
+      *ngIf="filteredFaqs.length === 0">
 
+      🔍 No matching questions found.
+
+    </div>
+
+  </div>
 
   <app-chatbot></app-chatbot>
 
-  
 </div>
